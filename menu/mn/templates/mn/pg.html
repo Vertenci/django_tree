@@ -1,10 +1,25 @@
+{% load menu_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>{{ menu_data.name }}</title>
 </head>
 <body>
-$END$
+<h1>{{ menu_data.name }}</h1>
+<ul>
+    {% for item in menu_data.items %}
+        <li>
+            {{ item.title }}
+            {% if item.children %}
+                <ul>
+                    {% for child in item.children %}
+                        <li>{{ child.title }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
 </body>
 </html>

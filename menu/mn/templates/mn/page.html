@@ -1,10 +1,88 @@
+{% load menu_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Мое меню</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 5px 0;
+        }
+        .toggle {
+            cursor: pointer;
+            color: #007BFF;
+            text-decoration: none;
+            padding: 8px;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .toggle:hover {
+            background-color: #e9ecef;
+        }
+        .submenu {
+            display: none;
+            padding-left: 20px;
+        }
+        .submenu.show {
+            display: block;
+        }
+    </style>
 </head>
 <body>
-$END$
+
+    <h1>Тест меню</h1>
+    <ul>
+        {% draw_menu 'Главное меню' as menu_data %}
+        {% if menu_data.items %}
+            <ul>
+                {% for item in menu_data.items %}
+                    <li>
+                        <a href="{{ item.get_absolute_url }}" class="toggle">{{ item.title }}</a>
+                        {% if item.children %}
+                            <ul class="submenu">
+                                {% for child in item.children %}
+                                    <li>
+                                        <a href="{{ child.get_absolute_url }}" class="toggle">{{ child.title }}</a>
+                                        {% if child.children %}
+                                            <ul class="submenu">
+                                                {% for grandchild in child.children %}
+                                                    <li>
+                                                        <a href="{{ grandchild.get_absolute_url }}" class="toggle">{{ grandchild.title }}</a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </ul>
+
+    <script>
+    document.querySelectorAll('.toggle').forEach(item => {
+        item.addEventListener('click', function(e) {
+            const submenu = this.nextElementSibling;
+
+            if (submenu && submenu.classList.contains('submenu')) {
+                e.preventDefault();
+                submenu.classList.toggle('show');
+            }
+        });
+    });
+</script>
 </body>
 </html>

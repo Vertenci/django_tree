@@ -1,7 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
+
+
 
 
 *.рус
@@ -16,7 +16,7 @@ node_modules/
 *.so
 
 # Distribution / packaging
-.Python
+
 build/
 develop-eggs/
 dist/
